@@ -15,7 +15,6 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
-import java.util.stream.Collectors;
 
 @Service
 @Slf4j
@@ -71,7 +70,6 @@ public class WishlistServiceImpl implements WishlistService {
         return modelMapper.map(savedWishlist, WishlistDto.class);
     }
 
-    // Helper method to get or create a wishlist for a user
     private Wishlist getOrCreateWishlist(UUID userId) {
         Optional<Wishlist> wishlistOptional = wishlistRepository.findByUserId(userId);
         if(wishlistOptional.isEmpty()) {
@@ -81,18 +79,5 @@ public class WishlistServiceImpl implements WishlistService {
             return wishlist;
         }
         return wishlistOptional.get();
-    }
-
-    // Helper method to get product details (simulated)
-    private ProductDto getProductDetails(UUID productId) {
-        // Simulated method to fetch product details from another service or repository
-        // In a real-world scenario, you would fetch this information from a product service or repository
-        ProductDto productDto = new ProductDto();
-        productDto.setId(productId);
-        productDto.setName("Product Name"); // Simulated name
-        productDto.setPrice(29.99); // Simulated price
-        productDto.setAvailableQuantity(100); // Simulated available quantity
-        // Other simulated product details
-        return productDto;
     }
 }

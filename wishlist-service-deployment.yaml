@@ -1,0 +1,40 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: wishlist-service-deployment
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: wishlist-service
+  template:
+    metadata:
+      labels:
+        app: wishlist-service
+    spec:
+      containers:
+        - name: wishlist-service
+          image: saswatcloud/p10-ecommerce-wishlist-service:1
+          ports:
+            - containerPort: 8080
+          env:
+          - name: MONGO_URL
+            value: mongodb://mongodb-service:27017/wishlist
+          - name: PRODUCT_SERVICE_BASE_URL
+            valueFrom:
+              configMapKeyRef:
+                name: service-config
+                key: PRODUCT_SERVICE_BASE_URL
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: wishlist-service
+spec:
+  selector:
+    app: wishlist-service
+  ports:
+    - protocol: TCP
+      port: 8080
+      targetPort: 8080
+  type: ClusterIP

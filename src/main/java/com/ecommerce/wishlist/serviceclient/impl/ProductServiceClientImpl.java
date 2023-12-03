@@ -26,7 +26,7 @@ public class ProductServiceClientImpl implements ProductServiceClient {
 
 
     public List<ProductDto> getProductsByIds(List<UUID> productIds) {
-        String url = String.format("%s/products/details", productServiceBaseUrl); // Assuming "/products" is the endpoint for creating a product
+        String url = String.format("%s/products/details", productServiceBaseUrl);
         ParameterizedTypeReference<List<ProductDto>> responseType = new ParameterizedTypeReference<>() {};
         HttpEntity<List<UUID>> requestEntity = new HttpEntity<>(productIds);
         ResponseEntity<List<ProductDto>> responseEntity = restTemplate.exchange(
